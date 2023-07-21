@@ -11,17 +11,51 @@ app.use(cors())
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 app.use(helmet({
-      crossOriginResourcePolicy: false,
-    }));
+  crossOriginResourcePolicy: false,
+}));
 app.use('/images', express.static(path.join(__dirname, 'images')))
 
 const db = require("./models");
 const userRoutes = require('./routes/user.routes');
 const categoriesRoutes = require('./routes/categories.routes');
 const worksRoutes = require('./routes/works.routes');
-db.sequelize.sync().then(()=> console.log('db is ready'));
+db.sequelize.sync().then(() => console.log('db is ready'));
 app.use('/api/users', userRoutes);
 app.use('/api/categories', categoriesRoutes);
 app.use('/api/works', worksRoutes);
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs))
+// app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs))
 module.exports = app;
+
+
+if (app.get('env') === 'dev' || app.get('env') === 'test' || app.get('env') === 'testcafe' || app.get('env') === 'testcafelocal') {
+  // development error handler. Will print stacktrace
+  app.use((err, req, res, next) => {
+    console.error(err);
+    res
+      .status(err.status || 500)
+      .json({
+        type: err.type,
+        message: err.message,
+        error: err
+      })
+  })
+  // use swagger ui explorer
+  app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs))
+
+} else if (app.get('env') === 'prod' || app.get('env') === 'uat' || app.get('env') === 'demo') {
+  // prod environment, forcing SSL
+  // disableSSL === true && log.warn('disableSSL is set to true, overwriting to false since we are not on a development environment');
+  // disableSSL = false;
+
+  // production error handler. No stacktraces leaked to user
+  app.use((err, req, res, next) => {
+    console.error(err.stack)
+
+    res
+      .status(500)
+      .json(errors.genericError());
+  })
+} else {
+  // not taking any chances
+  throw new Error(`unknown environment type "${app.get('env')}"`)
+}
