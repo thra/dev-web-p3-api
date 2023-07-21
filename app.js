@@ -3,9 +3,9 @@ const path = require('path');
 const cors = require('cors')
 require('dotenv').config();
 const helmet = require('helmet');
-const swaggerUi = require('swagger-ui-express')
-const yaml = require('yamljs')
-const swaggerDocs = yaml.load('swagger.yaml')
+// const swaggerUi = require('swagger-ui-express')
+// const yaml = require('yamljs')
+// const swaggerDocs = yaml.load('swagger.yaml')
 const app = express()
 app.use(cors())
 app.use(express.json())
@@ -40,7 +40,7 @@ if (app.get('env') === 'dev' || app.get('env') === 'test' || app.get('env') === 
       })
   })
   // use swagger ui explorer
-  app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs))
+  // app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs))
 
 } else if (app.get('env') === 'prod' || app.get('env') === 'uat' || app.get('env') === 'demo') {
   // prod environment, forcing SSL
