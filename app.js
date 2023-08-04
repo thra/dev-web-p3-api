@@ -1,11 +1,20 @@
 const express = require('express');
 const path = require('path');
 const cors = require('cors')
-require('dotenv').config();
+// require('dotenv').config();
 // const helmet = require('helmet');
 // const swaggerUi = require('swagger-ui-express')
 // const yaml = require('yamljs')
 // const swaggerDocs = yaml.load('swagger.yaml')
+
+// Copy the .env.example in the root into a .env file in this folder
+const envFilePath = path.resolve(__dirname, `.env`);
+const env = require("dotenv").config({ path: envFilePath });
+if (env.error) {
+  throw new Error(`Unable to load the .env file from ${envFilePath}. Please copy .env.example to ${envFilePath}`);
+}
+
+
 const app = express()
 app.use(cors())
 app.use(express.json())
