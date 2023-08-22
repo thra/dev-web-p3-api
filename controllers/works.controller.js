@@ -11,7 +11,7 @@ exports.create = async (req, res) => {
 	const title = req.body.title;
 	const categoryId = req.body.category;
 	const userId = req.auth.userId;
-	const imageUrl = `https://p3-prod-api.matouba-portfolio.fr/images/${req.file.filename}`;
+	const imageUrl = req.file.filename;
 	try{
 		const work = await Works.create({
 			title,
