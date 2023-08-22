@@ -83,7 +83,7 @@ paths:
                       example: "Abajour Tahina"
                     imageUrl:
                       type: string
-                      example: "http://localhost:5678/images/abajour-tahina1651286843956.png"
+                      example: "https://p3-prod-api.matouba-portfolio.fr/images/abajour-tahina1651286843956.png"
                     categoryId:
                       type: integer
                       format: int64
