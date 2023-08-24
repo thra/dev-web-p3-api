@@ -22,7 +22,7 @@ app.use(express.urlencoded({ extended: true }))
 // app.use(helmet({
 //   crossOriginResourcePolicy: false,
 // }));
-app.use('/images', express.static(path.join(__dirname, 'images')))
+app.use('/images', express.static('/home/ubuntu/dev-web-p3-api-prod/images'));
 
 // CORS
 app.use((req, res, next) => {
