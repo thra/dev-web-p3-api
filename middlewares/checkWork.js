@@ -1,10 +1,10 @@
 module.exports = (req, res, next) => {
 	try {
 		const host = req.get('host');
-		const title = req.body.title.trim();
-		const categoryId = parseInt(req.body.category);
-		const userId = req.auth.userId;
-		const imageUrl = `https://p3-prod-api.matouba-portfolio.fr/api/works/${req.file.filename}`;
+		const title = req.body.title.trim() ?? undefined;
+		const categoryId = parseInt(req.body.category) ?? undefined;
+		const userId = req.auth.userId ?? undefined;
+		const imageUrl = `https://p3-prod-api.matouba-portfolio.fr/api/works/${req.file.filename}` ?? undefined;
 		console.log(title, categoryId, userId, imageUrl)
 		if (title !== undefined &&
 			title.length > 0 &&
