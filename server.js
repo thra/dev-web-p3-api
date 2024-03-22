@@ -50,9 +50,9 @@ const server = isHTTP ?
 	https.createServer({
 		// options https://nodejs.org/api/tls.html#tls_tls_createsecurecontext_options
 		// https://itnext.io/node-express-letsencrypt-generate-a-free-ssl-certificate-and-run-an-https-server-in-5-minutes-a730fbe528ca
-		key: fs.readFileSync(path.resolve("/home/ubuntu/live/matouba-portfolio.fr/privkey.pem")),
-		cert: fs.readFileSync(path.resolve("/home/ubuntu/live/matouba-portfolio.fr/cert.pem")),
-		ca: fs.readFileSync(path.resolve("/home/ubuntu/live/matouba-portfolio.fr/chain.pem"))
+		key: fs.readFileSync(path.resolve("/home/ubuntu/live/creativity-studios.com/privkey.pem")),
+		cert: fs.readFileSync(path.resolve("/home/ubuntu/live/creativity-studios.com/cert.pem")),
+		ca: fs.readFileSync(path.resolve("/home/ubuntu/live/creativity-studios.com/chain.pem"))
 	}, app)
 
 server.on('error', errorHandler);
