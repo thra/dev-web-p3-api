@@ -1,8 +1,8 @@
 const db = require('./../models');
 const Works = db.works
 
-exports.findAll = async (req, res) =>  {
-	const works = await Works.findAll({include: 'category'});
+exports.findAll = async (req, res) => {
+	const works = await Works.findAll({ include: 'category' });
 	return res.status(200).json(works);
 }
 
@@ -11,9 +11,9 @@ exports.create = async (req, res) => {
 	const title = req.body.title;
 	const categoryId = req.body.category;
 	const userId = req.auth.userId;
-	const imageUrl = `https://p3-prod-api.matouba-portfolio.fr/images/${req.file.filename}`;
+	const imageUrl = `https://dev-web-p3-api-prod.creativity-studios.com/images/${req.file.filename}`;
 	console.log(imageUrl)
-	try{
+	try {
 		const work = await Works.create({
 			title,
 			imageUrl,
@@ -21,17 +21,17 @@ exports.create = async (req, res) => {
 			userId
 		})
 		return res.status(201).json(work)
-	}catch (err) {
+	} catch (err) {
 		return res.status(500).json({ error: new Error('Something went wrong') })
 	}
 }
 
 exports.delete = async (req, res) => {
-	try{
-		await Works.destroy({where:{id: req.params.id}})
-		return res.status(204).json({message: 'Work Deleted Successfully'})
-	}catch(e){
-		return res.status(500).json({error: new Error('Something went wrong')})
+	try {
+		await Works.destroy({ where: { id: req.params.id } })
+		return res.status(204).json({ message: 'Work Deleted Successfully' })
+	} catch (e) {
+		return res.status(500).json({ error: new Error('Something went wrong') })
 	}
 
 }
