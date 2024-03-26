@@ -8,7 +8,7 @@ const cors = require('cors')
 // const swaggerDocs = yaml.load('swagger.yaml')
 
 // Copy the .env.example in the root into a .env file in this folder
-const envFilePath = path.resolve(__dirname, `.env`);
+const envFilePath = path.resolve(__dirname, `.${process.env.NODE_ENV}.env`);
 const env = require("dotenv").config({ path: envFilePath });
 if (env.error) {
   throw new Error(`Unable to load the .env file from ${envFilePath}. Please copy .env.example to ${envFilePath}`);
@@ -22,7 +22,7 @@ app.use(express.urlencoded({ extended: true }))
 // app.use(helmet({
 //   crossOriginResourcePolicy: false,
 // }));
-app.use('/images', express.static('/home/ubuntu/dev-web-p3-api-prod/images'));
+app.use('/images', express.static(app.get('env') === 'dev' ? path.join(__dirname, 'images') : `${process.env.LOCAL_PATH}/images`));
 
 // CORS
 app.use((req, res, next) => {
@@ -44,7 +44,7 @@ app.use('/api/works', worksRoutes);
 module.exports = app;
 
 
-if (app.get('env') === 'dev' || app.get('env') === 'test' || app.get('env') === 'testcafe' || app.get('env') === 'testcafelocal') {
+if (app.get('env') === 'dev') {
   // development error handler. Will print stacktrace
   app.use((err, req, res, next) => {
     console.error(err);
@@ -59,7 +59,7 @@ if (app.get('env') === 'dev' || app.get('env') === 'test' || app.get('env') === 
   // use swagger ui explorer
   // app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs))
 
-} else if (app.get('env') === 'prod' || app.get('env') === 'uat' || app.get('env') === 'demo') {
+} else if (app.get('env') === 'prod') {
   // prod environment, forcing SSL
   // disableSSL === true && log.warn('disableSSL is set to true, overwriting to false since we are not on a development environment');
   // disableSSL = false;

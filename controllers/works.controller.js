@@ -8,10 +8,11 @@ exports.findAll = async (req, res) => {
 
 exports.create = async (req, res) => {
 	const host = req.get('host');
+	const PATH = process.env.NODE_ENV === 'dev' ? `${req.protocol}://${host}` : `${process.env.API_PATH}`
 	const title = req.body.title;
 	const categoryId = req.body.category;
 	const userId = req.auth.userId;
-	const imageUrl = `https://dev-web-p3-api-prod.creativity-studios.com/images/${req.file.filename}`;
+	const imageUrl = `${PATH}/images/${req.file.filename}`;
 	console.log(imageUrl)
 	try {
 		const work = await Works.create({

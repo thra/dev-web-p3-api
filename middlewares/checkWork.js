@@ -1,10 +1,11 @@
 module.exports = (req, res, next) => {
 	try {
 		const host = req.get('host');
+		const PATH = process.env.NODE_ENV === 'dev' ? `${req.protocol}://${host}` : `${process.env.API_PATH}`
 		const title = req.body.title.trim() ?? undefined;
 		const categoryId = parseInt(req.body.category) ?? undefined;
 		const userId = req.auth.userId ?? undefined;
-		const imageUrl = `https://p3-prod-api.matouba-portfolio.fr/api/works/${req.file.filename}` ?? undefined;
+		const imageUrl = `${PATH}/images/${req.file.filename}` ?? undefined;
 		console.log(title, categoryId, userId, imageUrl)
 		if (title !== undefined &&
 			title.length > 0 &&
